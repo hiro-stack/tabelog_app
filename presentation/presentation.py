@@ -4,6 +4,11 @@ from collections import Counter
 class Presentation:
 
     def __init__(self):
+
+        self._current_location = {}
+
+        self._areas = []
+
         self._time_is: str = ""
         self._price_max: int = 0
         self._max_minutes: int = 0
@@ -33,13 +38,43 @@ class Presentation:
         print(self._people_importance_scores)
         print(self._votes_result)
         print(self._alpha)
+        print(self._areas)
+        print(self._current_location)
 
     def data_input(self):
         # 入力値の設定
+        self.set_current_location()
+
         self.determin_importance()
         self._time_is = input("dinner or lunch:")
         self._price_max = self.get_valid_input("予算の上限", int)
         self._max_minutes = self.get_valid_input("現在地から徒歩何分以内か", int)
+
+    def set_current_location(self):
+        print("Google Mapで現在地の緯度と経度を確認して入力してください")
+        latitude = float(input("現在地の緯度を入力してください: "))
+        longitude = float(input("現在地の経度を入力してください: "))
+
+        self._current_location = {
+            "name": "現在地",
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+        print("現在地が設定されました:", self._current_location)
+
+    def set_areas(self):
+        self._areas = []
+        print(
+            "調べたい周辺の駅の名前を入力してください（終了するには空白のままEnter）:"
+        )
+
+        while True:
+            area = input("駅名: ").strip()
+            if area == "":
+                break  # 空白入力で終了
+            self._areas.append(area)
+
+        print("調べたい周辺の駅名が設定されました:", self._areas)
 
     def get_valid_input(self, prompt: str, input_type: type) -> int:
         while True:
@@ -133,6 +168,14 @@ class Presentation:
             "evaluate": force3,
             "voice_force": force4,
         }
+
+    @property
+    def current_location(self):
+        return self._current_location
+
+    @property
+    def areas(self):
+        return self._areas
 
     @property
     def menus(self):
