@@ -44,14 +44,14 @@ class Presentation:
     def data_input(self):
         # 入力値の設定
         self.set_current_location()
-
+        self.set_areas()
         self.determin_importance()
         self._time_is = input("dinner or lunch:")
-        self._price_max = self.get_valid_input("予算の上限", int)
+        self._price_max = self.get_valid_input("一人分の予算の上限", int)
         self._max_minutes = self.get_valid_input("現在地から徒歩何分以内か", int)
 
     def set_current_location(self):
-        print("Google Mapで現在地の緯度と経度を確認して入力してください")
+        print("Google Mapで現在地を長押しして緯度と経度を確認して入力してください")
         latitude = float(input("現在地の緯度を入力してください: "))
         longitude = float(input("現在地の経度を入力してください: "))
 
